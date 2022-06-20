@@ -23,6 +23,7 @@ menuPrinc = TRUE
 
 # Funcion para modulo de envio
 def modEnvio():
+    indice = 0 # Indice para todos los arreglos, al final agrego un contador
     otroPaq = 1
     while otroPaq == 1:
         # Módulo de envío
@@ -31,9 +32,13 @@ def modEnvio():
         print("          Módulo de envío")
         print("=====================================")
         print("=====================================")
+        peso = {}
+        envio = {}
+        costoKg = {}
+        costo = {}
         # Convierto a float el input pues el sistema debe de ser capaz de trabajar con paquetes que no son de un peso entero
-        peso = float(input("\n\nIngrese el peso (en Kg) del paquete a enviar: "))
-        if peso <=0 or peso > PESOMAX:
+        peso[indice] = float(input("\n\nIngrese el peso (en Kg) del paquete a enviar: "))
+        if peso[indice] <=0 or peso[indice] > PESOMAX:
             print("\nOpción inválida. Debe de ingresar un valor mayor a 0 o igual o menor a", PESOMAX,"\n")
             exit()
 
@@ -45,31 +50,27 @@ def modEnvio():
         tipoEnvio = int(input("\nIndique el tipo de envío que va a realizar (1, 2, o 3): "))
 
         if tipoEnvio==1:
-            envio = "Bajo Costo"
-            costoKg = 100
-            #envio="Express"
-            #costoKg = 200
+            envio[indice] = "Bajo Costo"
+            costoKg[indice] = 100
         elif tipoEnvio==2:
-            envio="Express"
-            costoKg = 200
-            #envio = "Bajo Costo"
-            #costoKg = 100
+            envio[indice] ="Express"
+            costoKg[indice] = 200
         elif tipoEnvio==3:
-            envio = "Internacional"
-            costoKg = 300
+            envio[indice] = "Internacional"
+            costoKg[indice] = 300
         else:
             print("Ha ingresado una opción incorrecta")
             exit()
 
         # Calculo de costo
         costoMin=1000
-        if peso>0 and peso<=1:
-            costo = costoMin
-        elif peso <= PESOMAX:
+        if peso[indice]>0 and peso[indice]<=1:
+            costo[indice] = costoMin
+        elif peso[indice] <= PESOMAX:
             # Utilizamos la funcion math.ceil para redondear hacia arriba pues no cobramos en fracciones
             # sino que cobramos por kg completos
             # Tomado de https://www.w3schools.com/python/ref_math_ceil.asp
-            costo = math.ceil((peso-1)) * costoKg + costoMin
+            costo[indice] = math.ceil((peso[indice]-1)) * costoKg[indice] + costoMin
         else:
             print("Ingresó un valor incorrecto. Debe de ser mayor a 0 pero menor a",PESOMAX)
 
@@ -77,9 +78,9 @@ def modEnvio():
         # En un future release, este reporte se mostrara cuando el cliente indique que ya ha agregado todos los paquetes necesarios
         # Utilizamos l.just para alinear los resultados y hacerlo mas atractivo visualmente para el usuario
         # Tomado de https://www.w3schools.com/python/ref_string_ljust.asp
-        print("\nEligió un paquete de:".ljust(50,"_"),peso,"kg")
-        print("Eligió un tipo de envío:".ljust(50,"_") + " " + envio)
-        print("El costo total a pagar por su paquete es de:".ljust(50,"_"),costo,"colones")
+        print("\nEligió un paquete de:".ljust(50,"_"),peso[indice],"kg")
+        print("Eligió un tipo de envío:".ljust(50,"_") + " " + envio[indice] )
+        print("El costo total a pagar por su paquete es de:".ljust(50,"_"),costo[indice] ,"colones")
         print("Su número de orden es:".ljust(50,"_"),NUMORDEN+1,"\n\n")#mas adelante el +1 se cambiaria por una variable contador
         
         # Pregunto al usuario si desea ingresar otro paquete
@@ -89,11 +90,14 @@ def modEnvio():
         otroPaqErr = 1
         while otroPaqErr == 1:
             otroPaq = int(input("Desea ingresar otro paquete? (1 para si, 0 para no): "))
-            if otroPaq != 1 and otroPaq != 0:
+            if otroPaq == 1:
+                indice+=1 # si otro paquete, contador del indice
+                otroPaqErr = 0
+            elif otroPaq == 0:
+                otroPaqErr = 0
+            else:
                 print("Ingreso un valor invalido, las opciones validas son 1 o 0")
                 otroPaqErr = 1
-            else:
-                otroPaqErr = 0
 
 # Funcion para modulo de facturacion
 def modFacturacion():
@@ -103,6 +107,9 @@ def modFacturacion():
     print("       Módulo de facturación")
     print("=====================================")
     print("=====================================")
+    nombre = input("Por favor ingrese su nombre: ")
+    cedula = input("Por favor ingrese su numero de cedula: ")
+    orden = int(input("Por favor ingrese su numero de orden: "))
     print("\nCódigo en construcción, disculpe las molestias, trabajamos en mejorar nuestros productos!\n")
     #exit()
 

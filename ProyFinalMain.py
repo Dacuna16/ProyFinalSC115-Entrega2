@@ -10,7 +10,6 @@
 
 # Se importa time para poder utilizar la funcion sleep y mejorar la experiencia de usuario
 # Tomado de https://www.pythoncentral.io/pythons-time-sleep-pause-wait-sleep-stop-your-code/
-from asyncio.windows_events import NULL
 import time
 
 # Se importa el modulo sys para poder terminar la ejecucion con la funcion exit
@@ -165,7 +164,7 @@ def modEnvio():
 def modFacturacion():
     # En esta función se referencian variables de la función modEnvio, utilizando su definición completa
     # Se utilizan las copias de las listas creadas en la función modEnvio
-    
+
     global NUMORDEN # Se declara la constante global para poder referenciarla dentro de la función
 
     print("\n\n=====================================")

@@ -2,6 +2,7 @@
 # Grupo 9 SC-115
 # Programación básica
 # Versión/Entrega 2.0
+# Acuña Chavarría Diego, Mora Allan, Picado Sebastian, Zamora Carlos
 # ================================
 
 # En versión 1.0 utilizabamos exit() cada vez que un usuario ingresaba un dato inválido.
@@ -39,8 +40,8 @@ def modEnvio():
     indice = 0 # Indice para todos los arreglos, al final se agrega un contador
     otroPaq = 1 # variable para controlar el ciclo que maneja si se desea ingresar otro paquete a la orden
 
-    # Inicializo 4 listas donde voy a guardar los valores de acuerdo a la cantidad de productos a ser enviados en una orden
-    # Las declaro con un scope específico para poder referenciarlas luego en una función diferente
+    # Se inicializan 4 listas donde se va a guardar los valores de acuerdo a la cantidad de productos a ser enviados en una orden
+    # Se declaran con un scope específico para poder referenciarlas luego en una función diferente
     # Se maneja una lista por cada tipo de dato, en una futura entrega se podría cambiar a que cada lista contenga
     # información de una orden específica
     modEnvio.peso = []
@@ -50,7 +51,6 @@ def modEnvio():
     modEnvio.numFactura = []
 
     while otroPaq == 1:
-        # Módulo de envío
         print("\n\n=====================================")
         print("=====================================")
         print("          Módulo de envío")
@@ -72,25 +72,30 @@ def modEnvio():
                 modEnvio.peso.append(pesoEntrada)
                 pesoVal=1
 
-        print("\n\nTenemos tres tipos de envío:")
-        print("1. BAJO COSTO (100 colones por cada kg adicional)")
-        print("2. EXPRESS (200 colones por cada kg adicional)")
-        print("3. INTERNACIONAL (300 colones por cada kg adicional)")
+        envioValido = 0
+        while envioValido == 0:
+            print("\n\nTenemos tres tipos de envío:")
+            print("1. BAJO COSTO (100 colones por cada kg adicional)")
+            print("2. EXPRESS (200 colones por cada kg adicional)")
+            print("3. INTERNACIONAL (300 colones por cada kg adicional)")
 
-        tipoEnvio = int(input("\nIndique el tipo de envío que va a realizar (1, 2, o 3): "))
+            tipoEnvio = int(input("\nIndique el tipo de envío que va a realizar (1, 2, o 3): "))
 
-        if tipoEnvio==1:
-            modEnvio.envio.append("Bajo Costo") 
-            modEnvio.costoKg.append(100)
-        elif tipoEnvio==2:
-            modEnvio.envio.append("Express")
-            modEnvio.costoKg.append(200)
-        elif tipoEnvio==3:
-            modEnvio.envio.append("Internacional") 
-            modEnvio.costoKg.append(300)
-        else:
-            print("Ha ingresado una opción incorrecta")
-            sys.exit()
+            if tipoEnvio==1:
+                modEnvio.envio.append("Bajo Costo") 
+                modEnvio.costoKg.append(100)
+                envioValido=1
+            elif tipoEnvio==2:
+                modEnvio.envio.append("Express")
+                modEnvio.costoKg.append(200)
+                envioValido=1
+            elif tipoEnvio==3:
+                modEnvio.envio.append("Internacional") 
+                modEnvio.costoKg.append(300)
+                envioValido=1
+            else:
+                print("Ha ingresado una opción incorrecta, por favor seleccione una opción válida")
+                time.sleep(1)
 
         # Calculo de costo
         costoMin=1000
@@ -102,14 +107,14 @@ def modEnvio():
             # Utilizamos la funcion math.ceil para redondear hacia arriba pues no cobramos en fracciones
             # sino que cobramos por kg completos
             # Tomado de https://www.w3schools.com/python/ref_math_ceil.asp
-            # Para calcular, multiplico la diferencia de kilos por el tipo de envío, y sumo el costoMin del primer kilo:
+            # Para calcular, se multiplica la diferencia de kilos por el tipo de envío, y se suma el costoMin del primer kilo:
             modEnvio.costo.append(math.ceil((modEnvio.peso[indice]-1)) * modEnvio.costoKg[indice] + costoMin)
         else:
             # En teoría, aquí no debería de llegar un peso inválido debido a una validación anterior
             print("Ingresó un valor incorrecto. Debe de ser mayor a 0 pero menor a",PESOMAX)
 
-        # Pregunto al usuario si desea ingresar otro paquete
-        # En caso de digitar un valor invalido, despliego error y vuelvo a preguntar
+        # Se pregunta al usuario si desea ingresar otro paquete
+        # En caso de digitar un valor invalido, se despliega error y se vuelve a preguntar
 
         otroPaqErr = 1
         while otroPaqErr == 1:
@@ -145,8 +150,8 @@ def modEnvio():
                 print("Ingreso un valor invalido, las opciones validas son 1 o 0")
                 otroPaqErr = 1
 
-    # Vuelvo a 0 estos valores en caso de que el usuario quiera volver a ingresar los valores
-    # Antes de volverlos a 0, creo una copia que puedo utilizar en la función de facturación
+    # Volvemos a 0 estos valores en caso de que el usuario quiera volver a ingresar los valores
+    # Antes de volverlos a 0, creamos una copia que podemos utilizar en la función de facturación
     modEnvio.peso2 = modEnvio.peso
     modEnvio.peso = []
     modEnvio.envio2 = modEnvio.envio
@@ -219,7 +224,7 @@ def modInformes():
 # |===========================================================================================================================|
 
 def modSalir():
-    # Declaro la variable global para poder modificarla desde la funcion
+    # Se declara la variable global para poder modificarla desde la funcion
     global menuPrinc 
 
     salir = int(input("Está seguro que desea salir? (1 para si, 0 para volver al menú principal)\n"))
